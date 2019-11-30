@@ -40,6 +40,7 @@ Javac是一种编译器，能够将一种语言规范转化为另外一种语言
 >Javac组件
 ![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3dpa2kvbWlhb2RhZGE2NjY2L3BpY3R1cmVzL0phdmFjX2NvbXBvbmVudC5wbmc?x-oss-process=image/format,png)
 
+
 &emsp;&emsp;Javac的各个模块完成了将Java源代码转化成JVM字节码的任务。Javac主要有四个模块，分别是词法分析器，语法分析器，语义分析器和代码生成器。
 
 ## 3.设计模式之访问者模式
