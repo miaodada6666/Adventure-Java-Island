@@ -124,4 +124,14 @@ public class CDPlayerConfig
 
 }
 ```
-@Bean注解会告诉Spring这个方法会返回一个对象，该对象要注册为Spring应用上下文中的bean。方法体中包含了最终产生bean实例的逻辑
+@Bean注解会告诉Spring这个方法会返回一个对象，该对象要注册为Spring应用上下文中的bean。
+>通过Java装配，将一个CompactDisc注入到CDPlayer之中
+```JAVA
+public class CDPlayer
+{
+    @Autowired//由于本实例只有一种实现类，所以默认注入对象为CompactDiscImp的实例，若有多个实现类，可用@Qualifier注解加以区分
+    private CompactDisc cd;//不通过new对象的方式，而是通过注入的形式创建了一个其他类的对象
+
+    cd.play();//会打印出“这是实现类”
+}
+```
