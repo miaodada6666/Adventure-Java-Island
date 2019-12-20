@@ -1,20 +1,32 @@
 # 浅学Spring Boot
-Spring Boot是Spring的扩展，在Spring的AOP(面向切面编程)和DI(依赖注入)两个特性的基础上又完善了以下四个功能。  
-- 自动配置：针对很多Spring应用程序所常见的应用功能，Spring boot能自动提供相关配置。  
-- 起步依赖：告诉Spring Boot需要什么功能，它就能引入需要的库。
-- 命令行界面：这是Spring Boot的可选特性，借此你只需写代码就能完成完整的应用程序，无需传统项目构建。
-- Actuator：让你能够深入运行中的Spring Boot应用程序，一探究竟。  
+Spring Boot是Spring的扩展，在保持了Spring原有两大特性的前提下又提出了新的功能。
 因此，正式介绍Spring Boot之前，我们不妨先来探寻以下Spring是个什么东西！
+<!-- TOC -->
+
+- [浅学Spring Boot](#浅学spring-boot)
+    - [Spring](#spring)
+        - [面向切面编程(AOP)](#面向切面编程aop)
+        - [依赖注入](#依赖注入)
+            - [自动化装配bean](#自动化装配bean)
+            - [通过Java代码装配bean](#通过java代码装配bean)
+    - [Spring Boot](#spring-boot)
+        - [自动配置](#自动配置)
+        - [起步依赖](#起步依赖)
+        - [命令行界面](#命令行界面)
+        - [Actuator](#actuator)
+
+<!-- /TOC -->
 ## Spring
 框架开发的初心都是为了降低程序员写代码时的复杂度，能够让程序员将自己的精力尽可能多的集中到自己的逻辑开发上面，而不是在开发环境的配置上面。为了实现这一点，Spring提出了以下两个技术：面向切面编程和依赖注入。
 ### 面向切面编程(AOP)
 面向切面编程，通俗来说就是把专业的活交给专业的人来干。举个例子，就像在学校里有很多食堂，这些食堂都被不同的餐饮公司所承包，这里被承包了的食堂就是切面。这样做有什么好处呢，很明显，食堂承包出去之后由于餐饮公司是专门做餐饮的，那饭菜肯定比学校自己做的好吃，而且学校将餐饮业务承包出去之后，就可以将自己更多的精力放在教书育人的上边，专注于自己的本职业务，如果对承包商不满意还可以即时的更换其他承包商，真是个一举多得的好事情，在编程当中，什么是这些切面呢？对象与对象之间，方法与方法之间，模块与模块之间都是一个个这样的切面。
 >单一职责原则：类应该是纯净的，不应含有与本身无关的逻辑。
 面向切面编程，可以带来代码的解耦，使得各个模块专注于自身的业务逻辑，提高开发效率。
-使用AOP之前，我们需要理解几个概念。
+使用AOP之前，我们需要理解几个概念。  
 
-图
+![](http://q1mbfn418.bkt.clouddn.com/Spring%20Boot%20AOP.png)
 
+传送门：[Spring 之 AOP](https://juejin.im/post/5a3201ff6fb9a0450f21f3ea)
 -  连接点(Join Point):  
 所有**可能**的需要注入切面的地方。比如方法前后，类初始化、属性初始化前后。  
 - 切点(Poincut):  
@@ -135,3 +147,47 @@ public class CDPlayer
     cd.play();//会打印出“这是实现类”
 }
 ```
+## Spring Boot
+Spring Boot是Spring的扩展，在Spring的AOP(面向切面编程)和DI(依赖注入)两个特性的基础上又完善了以下四个功能。  
+- 自动配置：针对很多Spring应用程序所常见的应用功能，Spring boot能自动提供相关配置。  
+- 起步依赖：告诉Spring Boot需要什么功能，它就能引入需要的库。
+- 命令行界面：这是Spring Boot的可选特性，借此你只需写代码就能完成完整的应用程序，无需传统项目构建。
+- Actuator：让你能够深入运行中的Spring Boot应用程序，一探究竟。 
+### 自动配置
+在任何Spring应用的源码中，你都会找到Java配置或XML配置（自动化配置难以配置第三方库中的组件），它们为应用程序开启了特定的特性和功能。举个例子，如果你写过用JDBC访问关系型数据库的应用程序，那你一定在Spring应用程序上下文里配置过JdbcTemplate这个Bean。
+```JAVA
+@Bean
+public JdbcTemplate jdbcTemplate(DataSource dataSource){
+    return new JdbcTemplate(dataSource);
+}
+```
+这段非常简单的Bean声明创建了一个JdbcTemplate的实例，注入了一个DataSource依赖，这意味着你还需要配置一个DataSource的Bean，这样才能满足依赖。  
+虽然这两个Bean配置方法都不复杂，也不是很长，但它们只是Spring应用程序配置的一小部分。除此之外，还有无数Sping应用程序有着类似的配置方法，简而言之，这就是个样板配置。  
+既然它如此常见，那我们有没有办法可以自动配置这些Bean而不是每次手动去写配置代码呢？  
+Spring Boot做到了这点，它会为这些常见配置场景进行自动配置。如果Spring Boot在应用程序的ClassPath里发现了JdbcTemplate，那么它会为你配置一个JdbcTemplate的Bean，如果在应用程序的Classpath里发现了DataSource,那么他还会为你创建一个DataSource的Bean。你无需担心那些Bean的配置，Spring Boot会做好准备，随时都能将其注入到你的Bean当中。这就是Spring Boot的自动配置.
+
+### 起步依赖
+Spring boot通过起步依赖为项目的依赖管理提供帮助。起步依赖就是特殊的Maven依赖和Gradle依赖，利用传递依赖解析，帮常用库聚合在一起。举个例子，假如你正在用Spring MVC构造REST API，并使用JSON作为资源表述。此外，你还想使用JSR-303规范的声明式校验，并使用嵌入式Tomcat服务器来提供服务。要实现以上目标，你在Maven或Gradle里至少需要以下8个依赖：
+>org.springframework:spring-core  
+>org.springframework:spring-web  
+>org.springframework:spring-webmvc  
+>com.fasterxml.jackson.core:jackson-databind  
+>org.hibernate:hibernate-validator  
+>org.apache.tomcat.embed:tomcat-embed-core  
+>org.apache.tomcat.embed:tomcat-embed-el  
+>org.apache.tomcat.embed:tomcat-embed-logging-juli  
+如果打算使用Spring Boot的起步依赖，你只需要添加Spring Boot的Web起步依赖（org.springframework.boot:spring-boot-starter-web），仅此一个。它会根据依赖传递把其他所需依赖引入项目里。  
+比起减少依赖数量，起步依赖还有一个好处就是：你不再需要考虑支持某种功能需要使用什么库了，直接引入相关依赖就行。如果应用是个Web应用，所以加入了Web起步依赖；如果应用程序要用到JPA持久化，那么就可以加入JPA起步依赖；需要安全功能，直接加入security起步依赖即可。
+### 命令行界面
+除了自动配置和起步依赖，Spring Boot还提供了一种很有意思的开发spring boot应用的新方法。Spring Boot Cli让只写代码即可实现应用程序成为可能。  
+Spring Boot Cli利用了起步依赖和自动配置，让你专注于代码本身。简单来说，CLI能检测到你使用了哪些类，它知道要向Classpath中添加哪些起步依赖才能让它运转起来，一旦那些依赖出现在Classpath中，一系列自动配置就会接踵而来。  
+但同时，Spring Boot Cli是Spring Boot的非必要组成部分，虽然它为Spring带来了惊人的力量，大大简化了开发，但也引入了一套不太常规的开发模型。如果您还是不太适应这种开发模型，可以抛开CLI，利用Spring Boot提供的其他东西。
+### Actuator
+Spring Boot的最后一个法宝就是Actuator，其他几个部分旨在简化Spring配置，而Actuator则要在提供运行时检查应用程序内部情况的能力。包括以下细节:
+- Spring应用程序上下文配置的Bean。
+- 应用程序取到的环境变量、系统属性、配置属性和命令行参数。
+- 应用程序中线程的当前状态。
+- 应用程序最近处理过的Http请求追踪情况。
+- 各种和内存用量，垃圾回收、Web请求相关的指标。
+
+传送门，[使用Spring Boot Actuator监控应用](http://www.ityouknow.com/springboot/2018/02/06/spring-boot-actuator.html)
