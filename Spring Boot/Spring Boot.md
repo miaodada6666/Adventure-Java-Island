@@ -137,7 +137,7 @@ public class CDPlayerConfig
 }
 ```
 @Bean注解会告诉Spring这个方法会返回一个对象，该对象要注册为Spring应用上下文中的bean。
->通过Java装配，将一个CompactDisc注入到CDPlayer之中
+>通过Java装配，将一个CompactDisc注入到CDPlayer之中。
 ```JAVA
 public class CDPlayer
 {
@@ -148,13 +148,13 @@ public class CDPlayer
 }
 ```
 ## Spring Boot
-Spring Boot是Spring的扩展，在Spring的AOP(面向切面编程)和DI(依赖注入)两个特性的基础上又完善了以下四个功能。  
+Spring Boot是Spring的扩展，在Spring的AOP(面向切面编程)和DI(依赖注入)两个特性的基础上又完善了以下四个功能：
 - 自动配置：针对很多Spring应用程序所常见的应用功能，Spring boot能自动提供相关配置。  
 - 起步依赖：告诉Spring Boot需要什么功能，它就能引入需要的库。
 - 命令行界面：这是Spring Boot的可选特性，借此你只需写代码就能完成完整的应用程序，无需传统项目构建。
 - Actuator：让你能够深入运行中的Spring Boot应用程序，一探究竟。 
 ### 自动配置
-在任何Spring应用的源码中，你都会找到Java配置或XML配置（自动化配置难以配置第三方库中的组件），它们为应用程序开启了特定的特性和功能。举个例子，如果你写过用JDBC访问关系型数据库的应用程序，那你一定在Spring应用程序上下文里配置过JdbcTemplate这个Bean。
+在任何Spring应用的源码中，你都会找到Java配置或XML配置（只使用自动化配置难以配置第三方库中的组件），它们为应用程序开启了特定的特性和功能。举个例子，如果你写过用JDBC访问关系型数据库的应用程序，那你一定在Spring应用程序上下文里配置过JdbcTemplate这个Bean。
 ```JAVA
 @Bean
 public JdbcTemplate jdbcTemplate(DataSource dataSource){
