@@ -162,9 +162,8 @@ public JdbcTemplate jdbcTemplate(DataSource dataSource){
 }
 ```
 这段非常简单的Bean声明创建了一个JdbcTemplate的实例，注入了一个DataSource依赖，这意味着你还需要配置一个DataSource的Bean，这样才能满足依赖。  
-虽然这两个Bean配置方法都不复杂，也不是很长，但它们只是Spring应用程序配置的一小部分。除此之外，还有无数Sping应用程序有着类似的配置方法，简而言之，这就是一个样板配置。  
-既然它如此常见，那我们有没有办法可以自动配置这些Bean而不是每次手动去写配置代码呢？  
-Spring Boot做到了这点，它会为这些常见配置场景进行自动配置。如果Spring Boot在应用程序的ClassPath里发现了JdbcTemplate，那么它会为你配置一个JdbcTemplate的Bean，如果在应用程序的Classpath里发现了DataSource,那么他还会为你创建一个DataSource的Bean。你无需担心那些Bean的配置，Spring Boot会做好准备，随时都能将其注入到你的Bean当中。这就是Spring Boot的自动配置.
+虽然这两个Bean配置方法都不复杂，也不是很长，但它们只是Spring应用程序配置的一小部分。除此之外，还有无数Sping应用程序有着类似的配置方法，简而言之，这就是一个样版配置。  
+既然它如此常见，那我们有没有办法可以自动配置这些Bean而不是每次手动去写配置代码呢？ 答案是当然有，Spring Boot做到了这点，它会为这些常见配置场景进行自动配置。如果Spring Boot在应用程序的ClassPath里发现了JdbcTemplate，那么它会为你配置一个JdbcTemplate的Bean，如果在应用程序的Classpath里发现了DataSource,那么他还会为你创建一个DataSource的Bean。你无需担心那些Bean的配置，Spring Boot会做好准备，随时都能将其注入到你的Bean当中，这就是Spring Boot的自动配置。
 
 ### 起步依赖
 Spring boot通过起步依赖为项目的依赖管理提供帮助。起步依赖就是特殊的Maven依赖和Gradle依赖，利用传递依赖解析，帮常用库聚合在一起。举个例子，假如你正在用Spring MVC构造REST API，并使用JSON作为资源表述。此外，你还想使用JSR-303规范的声明式校验，并使用嵌入式Tomcat服务器来提供服务。要实现以上目标，你在Maven或Gradle里至少需要以下8个依赖：
