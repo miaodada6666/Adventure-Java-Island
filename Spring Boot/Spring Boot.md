@@ -189,4 +189,4 @@ Spring Boot的最后一个法宝就是Actuator，其他几个部分旨在简化S
 - 应用程序最近处理过的Http请求追踪情况。
 - 各种和内存用量，垃圾回收、Web请求相关的指标。
 
-传送门，[使用Spring Boot Actuator监控应用](http://www.ityouknow.com/springboot/2018/02/06/spring-boot-actuator.html)
+传送门：[使用Spring Boot Actuator监控应用](http://www.ityouknow.com/springboot/2018/02/06/spring-boot-actuator.html)
